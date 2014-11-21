@@ -8,16 +8,18 @@
 # pylint: disable=W0108
 
 """
-# Store common python functions here
-# Import into Ipython kernel with following syntax
-
+# Store common Python functions here
+# Import into IPython kernel with following syntax
 from common import csv_to_df
+
+# After making changes to csv_to_df reload into IPython
+reload(csv_to_df)
 
 # If run from commandline provide system argument filename after script
 """
 
-__version__ = '21.11.2014'
 from __future__ import print_function
+__version__ = '21.11.2014'
 
 import sys
 import pandas as pd
@@ -27,7 +29,10 @@ def csv_to_df(filename=None):
     return pd.read_csv('data\\{0}'.format(filename), sep="\t", header=0)
 
 if __name__ == '__main__':
-    if len(sys.argv) != 2:
-        print("Error: No filename or dataframe name supplied")
+    if len(sys.argv) == 2:
+        try:
+            FRAME = csv_to_df(sys.argv[1])
+        except IOError:
+            print('Cannot open: {0}'.format(sys.argv[1]))
     else:
-        FRAME = csv_to_df('data\\{0}'.format(sys.argv[1]))
+        print('Please provide a filename as a system argument')
