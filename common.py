@@ -16,6 +16,7 @@ from common import csv_to_df
 # If run from commandline provide system argument filename after script
 """
 
+__version__ = '21.11.2014'
 from __future__ import print_function
 
 import sys
