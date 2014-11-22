@@ -29,6 +29,9 @@ import glob
 import datetime
 import pandas as pd
 
+from pandas import DataFrame
+from pandas import Series
+
 def csv_to_df(filename=None, index_col=None):
     """Pass relative filename string and return pandas DataFrame"""
     return pd.read_csv('data\\{0}'.format(filename), sep="\t", header=0,
@@ -57,6 +60,40 @@ def relabel(frame=None):
     ben = list(range(total))
     return frame.reindex(index=ben)
 
+def meter(progress):
+    """Provides visual indicator of progress"""
+    print("\r{}%".format(int(progress * 100)))
+
+
+def averagetool(inframe=None):
+    """Sifts through categories and averages incidence values per"""
+    country_code = 'adm0_name'
+    region_code = 'adm1_name'
+    date_code = 'ndate'
+    rice_types = 'cm_name'
+
+    countries = provideunique(inframe[country_code])
+    regions = provideunique(inframe[region_code])
+    dates = provideunique(inframe[date_code])
+
+    bydataprovider = DataFrame()
+    temp = DataFrame()
+
+    for country in countries:
+        temp = inframe[inframe[country_code]]
+        for region in regions:
+            temp = temp[temp[region_code]]
+            for date in dates:
+                temp = temp[temp[datetime.daetime(date_code)]]
+                print('{0}, {1}, {2}: '.format(country, region, date), temp)
+
+
+def provideunique(series=None):
+    count = []
+    for x in series:
+        if x not in count:
+            count.append(x)
+    return count
 
 if __name__ == '__main__':
     if len(sys.argv) == 2:
