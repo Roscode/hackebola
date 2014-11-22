@@ -87,6 +87,29 @@ def averagetool(inframe=None):
                 temp = temp[temp[datetime.daetime(date_code)]]
                 print('{0}, {1}, {2}: '.format(country, region, date), temp)
 
+def deaths_report_avg(deaths):
+    """Not toally sure if this works, by Darren"""
+    overalldict = {}
+    sourcesum = 0
+    for country in deaths['country']:
+        countries = deaths[deaths['country'] == country]
+        regiondict = {}
+        for region in countries['localite']:
+            regions = countries[countries['localite'] == region]
+            datedict = {}
+            for date in regions['ndate']:
+                dates = regions[regions['ndate'] == date]
+                count = 0
+                for source in dates['sources']:
+                    sourcery = dates[dates['sources']==source]
+                    sourcesum += sourcery['value']
+                    count += 1
+                avgreport = sourcesum/count
+                datedict[date] = avgreport
+            regiondict[region] = datedict
+        overalldict[country] = regiondict
+    return DataFrame.from_dict(overalldict)
+
 
 def provideunique(series=None):
     count = []
