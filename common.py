@@ -28,6 +28,7 @@ def csv_to_df(filename=None):
     """Pass relative filename string and return pandas DataFrame"""
     return pd.read_csv('data\\{0}'.format(filename), sep="\t", header=0)
 
+
 if __name__ == '__main__':
     if len(sys.argv) == 2:
         try:
