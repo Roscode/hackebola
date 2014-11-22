@@ -10,10 +10,12 @@
 """
 # Store common Python functions here
 # Import into IPython kernel with following syntax
-from common import csv_to_df
+
+[In] 1: from common import csv_to_df
 
 # After making changes to csv_to_df reload into IPython
-reload(csv_to_df)
+
+[In] 2: reload(csv_to_df)
 
 # If run from commandline provide system argument filename after script
 """
@@ -27,8 +29,6 @@ import glob
 import datetime
 import pandas as pd
 
-
-
 def csv_to_df(filename=None, index_col=None):
     """Pass relative filename string and return pandas DataFrame"""
     return pd.read_csv('data\\{0}'.format(filename), sep="\t", header=0,
@@ -40,7 +40,7 @@ def convert_time(time=None):
     try:
         return datetime.date(1899, 12, 30) + datetime.timedelta(days=time)
     except TypeError:
-        return 'NaN'
+        return 'NaT'
 
 def summer(x=0):
     """Consecutive summer"""
@@ -52,7 +52,7 @@ def summer(x=0):
         print("Not an integer")
 
 def relabel(frame=None):
-    """Reindexes a DataFrame from 0 to len(DataFrame)"""
+    """Reindexes a DataFrame from 0 to len(DataFrame)[inserts blanks NaN]"""
     total = len(frame.index)
     ben = list(range(total))
     return frame.reindex(index=ben)
@@ -80,7 +80,4 @@ deaths['cum_sum'] = deaths['value'].cumsum()
 
 Intifyer
 deaths['values'] = deaths['value'].map(lambda x: int(x))
-
-
-
 """
