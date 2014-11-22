@@ -77,22 +77,22 @@ def averagetool(inframe=None):
     dates = provideunique(inframe[date_code])
 
     #bydataprovider = DataFrame()
-    temp = DataFrame()
-
     for country in countries:
         temp = inframe[inframe[country_code] == 'Mali']
         for region in regions:
             temp = temp[temp[region_code] == 'Segou']
             for date in dates:
                 temp = temp[temp[date_code] == '2014-09-01']
-                print('{0}, {1}, {2}: \n'.format(country, region, date), temp)
+                print("{0}, {1}, {2}: \n".format(country, region, date), DataFrame(temp))
+
 
 def provideunique(series=None):
-    count = []
+    """Pass Series return list of unique values"""
+    uniques = []
     for x in series:
-        if x not in count:
-            count.append(x)
-    return count
+        if x not in uniques:
+            uniques.append(x)
+    return uniques
 
 
 
