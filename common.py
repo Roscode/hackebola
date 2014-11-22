@@ -113,8 +113,9 @@ def provideunique(series=None):
             uniques.append(x)
     return uniques
 
+"""
 def deaths_report_avg(deaths):
-    """Not totally sure if this works, by Darren"""
+    Not totally sure if this works, by Darren
     countrylist = provideunique(deaths['countries'])
     regionlist = provideunique(deaths['localite'])
     datelist = provideunique(deaths['ndate'])
@@ -139,7 +140,7 @@ def deaths_report_avg(deaths):
         overalldict[date] = countrydict
 
 def nested_dict_to_list(dictionary):
-    """warning: this function does nothing worthwhile"""
+    warning: this function does nothing worthwhile
     answer = []
     for k, v in dictionary.iteritems():
         answer.append(k)
@@ -148,7 +149,7 @@ def nested_dict_to_list(dictionary):
         else:
             answer.append(v)
     return answer
-
+"""
 
 
 
