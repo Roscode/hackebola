@@ -80,12 +80,22 @@ def averagetool(inframe=None):
     temp = DataFrame()
 
     for country in countries:
-        temp = inframe[inframe[country_code] == country]
+        temp = inframe[inframe[country_code] == 'Mali']
         for region in regions:
-            temp = temp[temp[region_code] == region]
+            temp = temp[temp[region_code] == 'Segou']
             for date in dates:
-                temp = temp[temp[date_code] == date]
+                temp = temp[temp[date_code] == '2014-09-01']
                 print('{0}, {1}, {2}: \n'.format(country, region, date), temp)
+
+def provideunique(series=None):
+    count = []
+    for x in series:
+        if x not in count:
+            count.append(x)
+    return count
+
+
+
 
 def deaths_report_avg(deaths):
     """Not toally sure if this works, by Darren"""
@@ -111,12 +121,7 @@ def deaths_report_avg(deaths):
     return DataFrame.from_dict(overalldict)
 
 
-def provideunique(series=None):
-    count = []
-    for x in series:
-        if x not in count:
-            count.append(x)
-    return count
+
 
 if __name__ == '__main__':
     if len(sys.argv) == 2:
