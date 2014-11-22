@@ -67,25 +67,43 @@ def meter(progress):
 
 def averagetool(inframe=None):
     """Sifts through categories and averages incidence values per"""
+
+    # Values to branch down to
     country_code = 'adm0_name'
     region_code = 'adm1_name'
     date_code = 'ndate'
-    #rice_types = 'cm_name'
 
-    #bydataprovider = DataFrame()
+    # Value to average and report on regardless of other categories
+    food_price = 'mp_price'
+
+    # Initialize final DataFrame for return
+    averaged_frame = DataFrame(columns=(country_code, region_code,
+                                        date_code, food_price))
+
+    # Keep track of each row appended to averaged_frame
+    i = 0
 
     countries = provideunique(inframe[country_code])
-
     for country in countries:
-        temp = inframe[inframe[country_code] == country]
-        regions = provideunique(temp[region_code])
+        country_frame = inframe[inframe[country_code] == country]
+        regions = provideunique(country_frame[region_code])
         for region in regions:
-            temp = temp[temp[region_code] == region]
-            dates = provideunique(temp[date_code])
+            region_frame = country_frame[country_frame[region_code] == region]
+            dates = provideunique(region_frame[date_code])
             for date in dates:
-                temp = temp[temp[date_code] == date]
-                print("{0}, {1}, {2}: \n".format(country, region, date),temp)
+                date_frame = region_frame[region_frame[date_code] == date]
+                if not date_frame.empty:
 
+                    # Computes average of value to be averaged
+                    average = date_frame[food_price].mean(axis=1)
+
+                    # Assign row to index i in averagedFrame
+                    averaged_frame.loc[i] = [country, region, date, average]
+
+                    # Increment row entry
+                    i += 1
+
+    return averaged_frame
 
 def provideunique(series=None):
     """Pass Series return list of unique values"""
@@ -94,9 +112,6 @@ def provideunique(series=None):
         if x not in uniques:
             uniques.append(x)
     return uniques
-
-
-
 
 def deaths_report_avg(deaths):
     """Not toally sure if this works, by Darren"""
