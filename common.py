@@ -72,18 +72,19 @@ def averagetool(inframe=None):
     date_code = 'ndate'
     #rice_types = 'cm_name'
 
-    countries = provideunique(inframe[country_code])
-    regions = provideunique(inframe[region_code])
-    dates = provideunique(inframe[date_code])
-
     #bydataprovider = DataFrame()
+
+    countries = provideunique(inframe[country_code])
+
     for country in countries:
-        temp = inframe[inframe[country_code] == 'Mali']
+        temp = inframe[inframe[country_code] == country]
+        regions = provideunique(temp[region_code])
         for region in regions:
-            temp = temp[temp[region_code] == 'Segou']
+            temp = temp[temp[region_code] == region]
+            dates = provideunique(temp[date_code])
             for date in dates:
-                temp = temp[temp[date_code] == '2014-09-01']
-                print("{0}, {1}, {2}: \n".format(country, region, date), DataFrame(temp))
+                temp = temp[temp[date_code] == date]
+                print("{0}, {1}, {2}: \n".format(country, region, date),temp)
 
 
 def provideunique(series=None):
