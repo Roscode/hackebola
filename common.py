@@ -80,11 +80,11 @@ def averagetool(inframe=None):
     temp = DataFrame()
 
     for country in countries:
-        temp = inframe[inframe[country_code]]
+        temp = inframe[inframe[country_code] == country]
         for region in regions:
-            temp = temp[temp[region_code]]
+            temp = temp[temp[region_code] == region]
             for date in dates:
-                temp = temp[temp[datetime.daetime(date_code)]]
+                temp = temp[temp[date_code] == date]
                 print('{0}, {1}, {2}: '.format(country, region, date), temp)
 
 def deaths_report_avg(deaths):
