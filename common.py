@@ -70,13 +70,13 @@ def averagetool(inframe=None):
     country_code = 'adm0_name'
     region_code = 'adm1_name'
     date_code = 'ndate'
-    rice_types = 'cm_name'
+    #rice_types = 'cm_name'
 
     countries = provideunique(inframe[country_code])
     regions = provideunique(inframe[region_code])
     dates = provideunique(inframe[date_code])
 
-    bydataprovider = DataFrame()
+    #bydataprovider = DataFrame()
     temp = DataFrame()
 
     for country in countries:
@@ -85,7 +85,7 @@ def averagetool(inframe=None):
             temp = temp[temp[region_code] == region]
             for date in dates:
                 temp = temp[temp[date_code] == date]
-                print('{0}, {1}, {2}: '.format(country, region, date), temp)
+                print('{0}, {1}, {2}: \n'.format(country, region, date), temp)
 
 def deaths_report_avg(deaths):
     """Not toally sure if this works, by Darren"""
