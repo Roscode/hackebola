@@ -114,27 +114,40 @@ def provideunique(series=None):
     return uniques
 
 def deaths_report_avg(deaths):
-    """Not toally sure if this works, by Darren"""
-    overalldict = {}
+    """Not totally sure if this works, by Darren"""
+    countrylist = provideunique(deaths['countries'])
+    regionlist = provideunique(deaths['localite'])
+    datelist = provideunique(deaths['ndate'])
     sourcesum = 0
-    for country in deaths['country']:
-        countries = deaths[deaths['country'] == country]
-        regiondict = {}
-        for region in countries['localite']:
-            regions = countries[countries['localite'] == region]
-            datedict = {}
-            for date in regions['ndate']:
-                dates = regions[regions['ndate'] == date]
+    overalldict = {}
+    for date in datelist:
+        dates = regions[regions['ndate'] == date]
+        countrydict = {}
+        for country in countrylist:
+            countries = deaths[deaths['country'] == country]
+            regiondict = {}
+            for region in regionlist:
+                regions = countries[countries['localite'] == region]
                 count = 0
                 for source in dates['sources']:
                     sourcery = dates[dates['sources']==source]
                     sourcesum += sourcery['value']
                     count += 1
                 avgreport = sourcesum/count
-                datedict[date] = avgreport
-            regiondict[region] = datedict
-        overalldict[country] = regiondict
-    return DataFrame.from_dict(overalldict)
+                regiondict[region] = avgreport
+            countrydict[country] = regiondict
+        overalldict[date] = countrydict
+
+def nested_dict_to_list(dictionary):
+    """warning: this function does nothing worthwhile"""
+    answer = []
+    for k, v in dictionary.iteritems():
+        answer.append(k)
+        if isinstance(v, dict):
+            answer.append(nested_dict_to_list(v))
+        else:
+            answer.append(v)
+    return answer
 
 
 
