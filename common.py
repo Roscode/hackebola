@@ -27,11 +27,7 @@ import glob
 import datetime
 import pandas as pd
 
-def builddata():
-    os.chdir("/data")
-    datafiles = []
-    for filename in glob.glob("*.csv"):
-        print(filename)
+
 
 def csv_to_df(filename=None, index_col=None):
     """Pass relative filename string and return pandas DataFrame"""
@@ -40,8 +36,26 @@ def csv_to_df(filename=None, index_col=None):
 
 def convert_time(time=None):
     """ Converts Excel days since Dec. 31st 1899 to current time"""
-    return datetime.date(1899, 12, 30) + datetime.timedelta(days=time)
+    time = int(time)
+    try:
+        return datetime.date(1899, 12, 30) + datetime.timedelta(days=time)
+    except TypeError:
+        return 'NaN'
 
+def summer(x=0):
+    """Consecutive summer"""
+    x = int(x)
+    total = 0
+    try:
+        return x + total
+    except TypeError:
+        print("Not an integer")
+
+def relabel(frame=None):
+    """Reindexes a DataFrame from 0 to len(DataFrame)"""
+    total = len(frame.index)
+    ben = list(range(total))
+    return frame.reindex(index=ben)
 
 
 if __name__ == '__main__':
@@ -52,3 +66,21 @@ if __name__ == '__main__':
             print('Cannot open: {0}'.format(sys.argv[1]))
     else:
         print('Please provide a filename as a system argument')
+
+
+"""
+Clint's Tricks
+
+Oh you know
+Removes NaN and ' '
+deaths = deaths[pd.notnull(deaths['value'] != ' ')]
+
+Cumulative summer
+deaths['cum_sum'] = deaths['value'].cumsum()
+
+Intifyer
+deaths['values'] = deaths['value'].map(lambda x: int(x))
+
+
+
+"""
